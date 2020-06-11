@@ -1,3 +1,7 @@
+# Stable Angels
+
+Let's all help make DAI stable, and getting rich in the process!
+
 ![image of angles](https://images.yourstory.com/cs/wordpress/2019/01/Angels-2.png?fm=png&auto=format)
 
 Help make DAI stable, and get rich quick!
