@@ -10,7 +10,7 @@ Help make DAI stable, and get rich quick!
 
 Rename .example.env to .env
 
-1. You need an Ethereum node, if you don't have one [sign up for free with Infura](https://infura.io/register). Get your app id and add it to ETH_NODE_URL
+1. You need an Ethereum node, if you don't have one [get one for free from Infura](https://infura.io/register). Get your app id and add it to ETH_NODE_URL
 
 2. You need an ethereum wallet of some kind. Get your public addres and paste next to PUBLIC_ADDRESS in the .env
 
