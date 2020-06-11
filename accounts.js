@@ -27,16 +27,11 @@ async function setupAccount () {
 
       const gasPrice = dsa.web3.utils.toWei(gasPrices.high.toString(), 'gwei')
 
-      dsa
-        .build({
-          gasPrice
-        })
-        .then(transactionId => {
-          console.log(transactionLink(transactionId).blue())
-          // dsa
-          //   .getAccounts(process.env.PUBLIC_ADDRESS)
-          //   .then(gotAddress => console.log('got address!' + gotAddress))
-        })
+      const transactionId = await dsa.build({
+        gasPrice
+      })
+
+      console.log(transactionLink(transactionId))
     }
   } else {
     console.log('ID  - Smart account address')
