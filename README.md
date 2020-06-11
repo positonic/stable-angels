@@ -1,14 +1,19 @@
 # Stable Angels
 
-Let's all help make DAI stable, and getting rich in the process!
+Let's all help make DAI stable, and get rich in the process!
 
 ![image of angles](https://images.yourstory.com/cs/wordpress/2019/01/Angels-2.png?fm=png&auto=format)
 
-Help make DAI stable, and get rich quick!
-
 ## Setup:
 
-Rename .example.env to .env
+```
+git clone git@github.com:jamespfarrell/stable-angels.git
+npm i
+```
+
+Make a copy of example.state.json to state.json
+
+Make a copy of .example.env to .env
 
 1. You need an Ethereum node, if you don't have one [get one for free from Infura](https://infura.io/register). Get your app id and add it to ETH_NODE_URL
 
@@ -22,7 +27,7 @@ Once you have done this, we are ready to go:
 
 We are using Instadapp smart accounts in order to trade between different Ethereum based DeFi assets. In order to do so, we need an owner account (Ethereum wallet) and it's private key.
 
-An easy way to set up an owner account is with [Meta mast](https://metamask.io/), which means that when I go to the [Instadapp DSA dashboard](https://dsa.instadapp.io/), I can see the accounts I have created, and their balances.
+An easy way to set up an owner account is with [Metamask](https://metamask.io/), which means that when I go to the [Instadapp DSA dashboard](https://dsa.instadapp.io/), I can see the accounts I have created, and their balances.
 
 With our owning ethereum address and private key, we can create instadapp smart account (DSA).
 

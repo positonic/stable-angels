@@ -2,6 +2,7 @@ const { getState, setState } = require('./state')
 const { prompt, Confirm, Select } = require('enquirer')
 const state = getState()
 const { dsa } = require('./dsa')
+const { getCurrentGasPrices } = require('./utils')
 
 async function getCurrentAccountId () {
   if (state.dsaId) {
@@ -22,6 +23,10 @@ async function setupAccount () {
     const confirmAccountCreationResponse = await confirmAccountCreation.run()
 
     if (confirmAccountCreationResponse === true) {
+      const gasPrices = await getCurrentGasPrices()
+
+      const gasPrice = dsa.web3.utils.toWei(gasPrices.high.toString(), 'gwei')
+
       dsa
         .build({
           gasPrice
