@@ -3,6 +3,7 @@ const { prompt, Confirm, Select } = require('enquirer')
 const state = getState()
 const { dsa } = require('./dsa')
 const { getCurrentGasPrices } = require('./utils')
+const { transactionLink } = require('./terminal')
 
 async function getCurrentAccountId () {
   if (state.dsaId) {
