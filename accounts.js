@@ -114,10 +114,10 @@ module.exports = {
   setupAccount,
   getAccounts
 }
-async function run () {
+async function testRun () {
   const accounts = await getAccounts(process.env.PUBLIC_ADDRESS)
 
   const balance = await accounts.getBalanceByAccountId('856')
   console.log(`balance!! ---> : ${balance}`)
 }
-//run()
+//testRun()

@@ -5,11 +5,9 @@ async function getPrice (from, to) {
     ? process.env.PRICE_BASE_URL
     : `https://api.1inch.exchange`
 
-  let response = await axios.get(
-    `${priceUrlBase}/v1.1/quote?fromTokenSymbol=${from}&toTokenSymbol=${to}&amount=1&disabledExchangesList=Bancor`
-  )
+  const priceUrl = `${priceUrlBase}v1.1/quote?fromTokenSymbol=${from}&toTokenSymbol=${to}&amount=1&disabledExchangesList=Bancor`
 
-  // console.log(`response.data : ${JSON.stringify(response.data, null, 2)}`)
+  let response = await axios.get(priceUrl)
 
   const { toTokenAmount } = response.data
 
