@@ -7,7 +7,9 @@ const from = 'USDC'
 const to = 'DAI'
 
 setInterval(async function () {
-  market = await fetch(from, to)
+  const market = await fetch(from, to)
+
+  console.log(`market : ${JSON.stringify(market, null, 2)}`)
 
   if (market.price !== savedMarket.price) {
     savedMarket = market
