@@ -28,11 +28,30 @@ async function setupAccount () {
 
       const gasPrice = dsa.web3.utils.toWei(gasPrices.high.toString(), 'gwei')
 
-      const transactionId = await dsa.build({
-        gasPrice
-      })
+      // const txnId = await dsa.build({
+      //   gasPrice
+      // })
+      const txnId =
+        '0x8699f24f5f5946d5b6bf2af9afeed16a3b4eaf3a75028edd28fe330d00404556 '
 
-      console.log(transactionLink(transactionId))
+      const txn = {}
+
+      try {
+        txn = await trackPendingTransaction(txnId, 30, 15)
+        txn.success = true
+        console.log(`txn : ${JSON.stringify(txn, null, 2)}`)
+        const acccounts = getAccounts()
+        state.accounts = acccounts
+      } catch (error) {
+        txn.success = false
+        console.log(
+          'Your transaction appears to be taking longer than expect, please re-run after your transactions completes.'
+        )
+        consol.log(
+          'You can keep track of your transaction here - ' +
+            transactionLink(transactionId)()
+        )
+      }
     }
   } else {
     console.log('ID  - Smart account address')
@@ -42,57 +61,60 @@ async function setupAccount () {
   }
 
   console.log(`state.accounts : ${JSON.stringify(state.accounts, null, 2)}`)
-
-  const accountPrompt = new Select({
-    name: 'account',
-    message:
-      'Use arrows and space bar to select which smart account do you want to use?',
-    limit: 10,
-    multiple: false,
-    choices: state.accounts.map(o => {
-      return {
-        name: o.address,
-        value: o.id
-      }
+  if (state.accounts.length) {
+    const accountPrompt = new Select({
+      name: 'account',
+      message:
+        'Use arrows and space bar to select which smart account do you want to use?',
+      limit: 10,
+      multiple: false,
+      choices: state.accounts.map(o => {
+        return {
+          name: o.address,
+          value: o.id
+        }
+      })
     })
-  })
-  const selectedAccount = await accountPrompt.run()
+    const selectedAccount = await accountPrompt.run()
 
-  console.log(`selectedAccount : ${JSON.stringify(selectedAccount, null, 2)}`)
+    console.log(`selectedAccount : ${JSON.stringify(selectedAccount, null, 2)}`)
 
-  // function sleep (ms) {
-  //   return new Promise(resolve => setTimeout(resolve, ms))
-  // }
-  //const selectedAccount = await accountPrompt.run()
-  // accountPrompt
-  //   .run()
-  //   .then(answer => console.log('Answer:', answer))
-  //   .catch(console.error)
-  // console.log(`selectedAccount : ${JSON.stringify(selectedAccount, null, 2)}`)
-  // sleep(2000)
-  // process.exit()
-  const confirmAccountResponse = new Confirm({
-    name: 'question',
-    message: `Do you want to set ${selectedAccount} as instance, this costs gas?`
-  })
+    // function sleep (ms) {
+    //   return new Promise(resolve => setTimeout(resolve, ms))
+    // }
+    //const selectedAccount = await accountPrompt.run()
+    // accountPrompt
+    //   .run()
+    //   .then(answer => console.log('Answer:', answer))
+    //   .catch(console.error)
+    // console.log(`selectedAccount : ${JSON.stringify(selectedAccount, null, 2)}`)
+    // sleep(2000)
+    // process.exit()
+    const confirmAccountResponse = new Confirm({
+      name: 'question',
+      message: `Do you want to set ${selectedAccount} as instance, this costs gas?`
+    })
 
-  const setInstanceResponse = await confirmAccountResponse.run()
+    const setInstanceResponse = await confirmAccountResponse.run()
 
-  if (setInstanceResponse === true) {
-    const dsas = state.accounts.filter(o => o.address === selectedAccount)
-    //console.log(`dsas : ${JSON.stringify(dsas, null, 2)}`)
+    if (setInstanceResponse === true) {
+      const dsas = state.accounts.filter(o => o.address === selectedAccount)
+      //console.log(`dsas : ${JSON.stringify(dsas, null, 2)}`)
 
-    if (dsas.length === 0) throw Error('Invalid smart account selection')
+      if (dsas.length === 0) throw Error('Invalid smart account selection')
 
-    const dsaId = dsas[0].id
-    state.dsaId = dsaId
-    state.initialised = true
-    setState(state)
-    dsa.setInstance(dsaId)
-    return state
+      const dsaId = dsas[0].id
+      state.dsaId = dsaId
+      state.initialised = true
+      setState(state)
+      dsa.setInstance(dsaId)
+      return state
+    } else {
+      console.log('ok bye')
+      process.exit()
+    }
   } else {
-    console.log('ok bye')
-    process.exit()
+    console.log('still no account, bye for now')
   }
 }
 
