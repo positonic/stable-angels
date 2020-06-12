@@ -47,7 +47,7 @@ async function setupAccount () {
         console.log(
           'Your transaction appears to be taking longer than expect, please re-run after your transactions completes.'
         )
-        consol.log(
+        console.log(
           'You can keep track of your transaction here - ' +
             transactionLink(transactionId)()
         )
