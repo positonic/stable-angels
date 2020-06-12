@@ -22,6 +22,10 @@ function trackPendingTransaction (
     async function fetchCheckTransaction () {
       const txn = await fetchTxn(transactionId)
 
+      console.log(`txn ---> : ${txn}`)
+      if (txn === null) {
+        reject('Cant find transaction')
+      }
       console.log(`isPending(txn) ---> : ${isPending(txn)}`)
       if (isPending(txn)) {
         console.log('... transaction is pending - retry ' + attemptCount)
@@ -50,20 +54,15 @@ module.exports = {
 
 async function run () {
   const txnId =
-    '0x605fb1afb53a5f70bb0120da9aa90053e585b138a9a2ca90cd487ee14e154578'
+    '0x48ef5335afb9f47dd3e041ffb0d49e952df5cc34840ab24d74e38aa232958401'
 
-  if (isTxnPending(txnId)) {
-    console.log('Transaction pending, lets track it')
-
-    //const txn = await trackPendingTransaction(txnId)
-    try {
-      const txn = await trackPendingTransaction(txnId, 30, 15)
-      txn.success = true
-      console.log(`txn : ${JSON.stringify(txn, null, 2)}`)
-    } catch (error) {
-      const txn = {}
-      txn.success = false
-    }
+  try {
+    const txn = await trackPendingTransaction(txnId, 30, 15)
+    txn.success = true
+    console.log(`txn : ${JSON.stringify(txn, null, 2)}`)
+  } catch (error) {
+    const txn = {}
+    txn.success = false
   }
 }
-run()
+// run()

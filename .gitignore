@@ -1,5 +1,5 @@
 node_modules/
 smartAccounts.js
-.env*
+.env
 state.json
 settings.json

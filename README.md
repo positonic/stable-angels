@@ -11,9 +11,9 @@ git clone git@github.com:jamespfarrell/stable-angels.git
 npm i
 ```
 
-Make a copy of example.state.json to state.json
+Make a copy of state.example.json to state.json
 
-Make a copy of .example.env to .env
+Make a copy of .env.example to .env
 
 1. You need an Ethereum node, if you don't have one [get one for free from Infura](https://infura.io/register). Get your app id and add it to ETH_NODE_URL
 
@@ -39,7 +39,7 @@ This will lead you through an onboarding if you havent aleady set up your accoun
 
 It uses the state.json file for state and persistance because I didn't want to introduce any database or other dependencies yet.
 
-When you run `npm start` it will check to see if you have initialised the app by checking the value of 'initalised' in state.json, if not it will hold your hand while setting up your smart accounts.
+When you run `npm start` it will check to see if you have initialised the app by checking the value of 'initialised' in state.json, if not it will hold your hand while setting up your smart accounts.
 
 Then we need to get money into this new DSA. This isn't yet implemented, as so you need to do that yourself somehow. I did it with the Instadapp dashboard.
 
@@ -58,7 +58,7 @@ Run `node graphql`
 ### Works in progress:
 
 Saves checks prices and puts them in the console:
-Run `node prices`
+Run `node getPrice`
 
 Haura:
 Create env variable HASURA_GRAPHQL_UNAUTHORIZED_ROLE and add it to your .env file

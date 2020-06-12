@@ -4,6 +4,8 @@ const state = getState()
 const { dsa } = require('./dsa')
 const { getCurrentGasPrices } = require('./utils')
 const { transactionLink } = require('./terminal')
+const { trackPendingTransaction } = require('./transaction')
+const colors = require('colors')
 
 async function getCurrentAccountId () {
   if (state.dsaId) {
@@ -15,10 +17,11 @@ async function getCurrentAccountId () {
 }
 async function setupAccount () {
   if (state.accounts.length === 0) {
-    console.log('You have no smart accounts set up')
+    console.log('\nYou will create a DeFi smart account (DSA) to continue'.cyan)
     const confirmAccountCreation = new Confirm({
       name: 'question',
-      message: `Do you want to set up a smart account now? This action will cost gas?`
+      initial: 'N',
+      message: `Do you want to set up a smart account now? This action will cost 2 or 3 dollars (estimated - DYOR)?`
     })
 
     const confirmAccountCreationResponse = await confirmAccountCreation.run()
@@ -28,21 +31,21 @@ async function setupAccount () {
 
       const gasPrice = dsa.web3.utils.toWei(gasPrices.high.toString(), 'gwei')
 
-      // const txnId = await dsa.build({
-      //   gasPrice
-      // })
-      const txnId =
-        '0x8699f24f5f5946d5b6bf2af9afeed16a3b4eaf3a75028edd28fe330d00404556 '
+      const txnId = await dsa.build({
+        gasPrice
+      })
 
-      const txn = {}
+      let txn = {}
 
       try {
         txn = await trackPendingTransaction(txnId, 30, 15)
         txn.success = true
         console.log(`txn : ${JSON.stringify(txn, null, 2)}`)
-        const acccounts = getAccounts()
+        const acccounts = await getAccounts(process.env.PUBLIC_ADDRESS)
         state.accounts = acccounts
       } catch (error) {
+        console.log(`error : ${JSON.stringify(error, null, 2)}`)
+
         txn.success = false
         console.log(
           'Your transaction appears to be taking longer than expect, please re-run after your transactions completes.'
@@ -60,7 +63,6 @@ async function setupAccount () {
     })
   }
 
-  console.log(`state.accounts : ${JSON.stringify(state.accounts, null, 2)}`)
   if (state.accounts.length) {
     const accountPrompt = new Select({
       name: 'account',
@@ -98,17 +100,21 @@ async function setupAccount () {
     const setInstanceResponse = await confirmAccountResponse.run()
 
     if (setInstanceResponse === true) {
-      const dsas = state.accounts.filter(o => o.address === selectedAccount)
-      //console.log(`dsas : ${JSON.stringify(dsas, null, 2)}`)
+      try {
+        const dsas = state.accounts.filter(o => o.address === selectedAccount)
+        console.log(`dsas : ${JSON.stringify(dsas, null, 2)}`)
 
-      if (dsas.length === 0) throw Error('Invalid smart account selection')
+        if (dsas.length === 0) throw Error('Invalid smart account selection')
 
-      const dsaId = dsas[0].id
-      state.dsaId = dsaId
-      state.initialised = true
-      setState(state)
-      dsa.setInstance(dsaId)
-      return state
+        const dsaId = dsas[0].id
+        state.dsaId = dsaId
+        state.initialised = true
+        setState(state)
+        dsa.setInstance(dsaId)
+        return state
+      } catch (error) {
+        console.log(`error : ${JSON.stringify(error, null, 2)}`)
+      }
     } else {
       console.log('ok bye')
       process.exit()
