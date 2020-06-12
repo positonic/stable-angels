@@ -141,7 +141,8 @@ async function getAccounts (ownerAddress) {
 module.exports = {
   getCurrentAccountId,
   setupAccount,
-  getAccounts
+  getAccounts,
+  getBalanceByAccountId
 }
 async function testRun () {
   const accounts = await getAccounts(process.env.PUBLIC_ADDRESS)
