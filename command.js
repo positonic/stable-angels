@@ -22,7 +22,7 @@ function init () {
   vorpal
     .command('scan', 'Find opportunities')
     .action(async function (args, callback) {
-      console.log(`Scanning USDC / DAI market`)
+      console.log('Scanning USDC / DAI market')
       const intervalId = twirlTimer()
 
       const markets = await fetchMarkets([
@@ -45,7 +45,7 @@ function init () {
     })
 
   vorpal.command('swap', 'Swap coin').action(async function (args, callback) {
-    console.log(`Swapping USDC to DAI`)
+    console.log('Swapping USDC to DAI')
     const intervalId = twirlTimer()
     try {
       const accountId = await getCurrentAccountId()

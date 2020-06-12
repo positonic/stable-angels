@@ -21,7 +21,7 @@ async function setupAccount () {
     const confirmAccountCreation = new Confirm({
       name: 'question',
       initial: 'N',
-      message: `Do you want to set up a smart account now? This action will cost 2 or 3 dollars (estimated - DYOR)?`
+      message: 'Do you want to set up a smart account now? This action will cost 2 or 3 dollars (estimated - DYOR)?'
     })
 
     const confirmAccountCreationResponse = await confirmAccountCreation.run()
@@ -84,7 +84,7 @@ async function setupAccount () {
     // function sleep (ms) {
     //   return new Promise(resolve => setTimeout(resolve, ms))
     // }
-    //const selectedAccount = await accountPrompt.run()
+    // const selectedAccount = await accountPrompt.run()
     // accountPrompt
     //   .run()
     //   .then(answer => console.log('Answer:', answer))
@@ -150,4 +150,4 @@ async function testRun () {
   const balance = await accounts.getBalanceByAccountId('856')
   console.log(`balance!! ---> : ${balance}`)
 }
-//testRun()
+// testRun()

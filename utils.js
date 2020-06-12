@@ -1,18 +1,18 @@
 const axios = require('axios')
 
 async function getCurrentGasPrices () {
-  let response = await axios.get(
+  const response = await axios.get(
     'https://ethgasstation.info/json/ethgasAPI.json'
   )
-  ///console.log(`response : ${JSON.stringify(response, null, 2)}`)
+  /// console.log(`response : ${JSON.stringify(response, null, 2)}`)
 
-  let prices = {
+  const prices = {
     low: response.data.safeLow / 10,
     medium: response.data.average / 10,
     high: response.data.fast / 10
   }
 
-  console.log(`Current ETH Gas Prices (in GWEI):`)
+  console.log('Current ETH Gas Prices (in GWEI):')
   console.log(`Low: ${prices.low} (transaction completes in < 30 minutes)`)
   console.log(
     `Standard: ${prices.medium} (transaction completes in < 5 minutes)`

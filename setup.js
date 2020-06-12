@@ -10,7 +10,7 @@ async function run () {
   } else {
     const confirmAccountResponse = new Confirm({
       name: 'question',
-      message: `Do you want to set up a new account?`
+      message: 'Do you want to set up a new account?'
     })
 
     const setInstanceResponse = await confirmAccountResponse.run()

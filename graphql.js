@@ -57,14 +57,14 @@ async function savePrice (from, to, price) {
 }
 async function testRun () {
   try {
-    //const response = await testGet()
+    // const response = await testGet()
     const response = await savePrice('USDC', 'DAI', 1029849209877)
     console.log(`response : ${JSON.stringify(response, null, 2)}`)
   } catch (error) {
     console.log(`error : ${JSON.stringify(error, null, 2)}`)
   }
 }
-//testRun()
+// testRun()
 
 module.exports = {
   savePrice

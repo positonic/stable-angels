@@ -14,19 +14,19 @@ async function swap (withdrawAmount, from, to, accountId) {
     throw Error('Insufficient balance')
   }
 
-  let withdrawAmtInWei = dsa.tokens.fromDecimal(
+  const withdrawAmtInWei = dsa.tokens.fromDecimal(
     withdrawAmount,
     from.toLowerCase()
   ) // borrow flash loan and swap via Oasis
 
-  let slippage = 0.2 // 0.2% slippage.
-  let toAddress = dsa.tokens.info[to.toLowerCase()].address
-  let fromAddress = dsa.tokens.info[from.toLowerCase()].address
+  const slippage = 0.2 // 0.2% slippage.
+  const toAddress = dsa.tokens.info[to.toLowerCase()].address
+  const fromAddress = dsa.tokens.info[from.toLowerCase()].address
 
   console.log(`toAddress ---> : ${toAddress}`)
   console.log(`fromAddress ---> : ${fromAddress}`)
 
-  let buyAmount = await dsa.oasis.getBuyAmount(
+  const buyAmount = await dsa.oasis.getBuyAmount(
     from,
     to,
     withdrawAmount,
@@ -35,7 +35,7 @@ async function swap (withdrawAmount, from, to, accountId) {
 
   console.log(`oasis buyAmount : ${JSON.stringify(buyAmount, null, 2)}`)
 
-  let spells = dsa.Spell()
+  const spells = dsa.Spell()
 
   spells.add({
     connector: 'compound',
