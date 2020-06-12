@@ -5,6 +5,7 @@ const { getPrice } = require('./price')
 const { swap } = require('./swaps')
 const { twirlTimer } = require('./animation')
 const { getCurrentAccountId } = require('./accounts')
+const { fetchMarkets } = require('./markets')
 
 function init () {
   vorpal
@@ -23,17 +24,23 @@ function init () {
     .action(async function (args, callback) {
       console.log(`Scanning USDC / DAI market`)
       const intervalId = twirlTimer()
-      const market = await fetch('USDC', 'DAI')
-      console.log(`${market.percentageDifference}% difference --->   : `)
 
+      const markets = await fetchMarkets([
+        {
+          from: 'USDC',
+          to: 'DAI'
+        }
+      ])
       clearInterval(intervalId)
 
-      const doSwap = market.percentageDifference > 1
-      console.log(`doSwap ---> : ${doSwap}`)
-      if (false) {
-        const accountId = await getCurrentAccountId()
-        const swapped = await swap(10, 'USDC', 'DAI', accountId)
-      }
+      console.log(`markets : ${JSON.stringify(markets, null, 2)}`)
+
+      markets.forEach(market =>
+        console.log(
+          `${market.from} to ${market.to} = ${market.percentageDifference}% difference`
+        )
+      )
+
       callback()
     })
 

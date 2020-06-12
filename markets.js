@@ -5,6 +5,8 @@ async function fetch (from, to) {
   const price = await getPrice(from, to)
 
   const market = {}
+  market.from = from
+  market.to = to
   market.price = price
 
   market.difference = price - 1000000000000
@@ -20,6 +22,13 @@ async function fetch (from, to) {
   return market
 }
 
+async function fetchMarkets (markets) {
+  return await Promise.all(
+    markets.map(async market => await fetch(market.from, market.to))
+  )
+}
+
 module.exports = {
-  fetch
+  fetch,
+  fetchMarkets
 }
