@@ -49,7 +49,7 @@ async function setupAccount () {
         )
         console.log(
           'You can keep track of your transaction here - ' +
-            transactionLink(transactionId)()
+            transactionLink(txnId)
         )
       }
     }
