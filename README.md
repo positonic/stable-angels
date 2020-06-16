@@ -37,7 +37,7 @@ To start run `npm start`
 
 This will lead you through an onboarding if you havent aleady set up your accounts yet.
 
-![https://github.com/jamespfarrell/stable-angels/blob/master/create-account.gif]
+![Create smart account](https://github.com/jamespfarrell/stable-angels/blob/master/create-account.gif)
 
 It uses the state.json file for state and persistance because I didn't want to introduce any database or other dependencies yet.
 
