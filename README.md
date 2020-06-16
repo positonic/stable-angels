@@ -37,6 +37,8 @@ To start run `npm start`
 
 This will lead you through an onboarding if you havent aleady set up your accounts yet.
 
+![https://github.com/jamespfarrell/stable-angels/blob/master/create-account.gif]
+
 It uses the state.json file for state and persistance because I didn't want to introduce any database or other dependencies yet.
 
 When you run `npm start` it will check to see if you have initialised the app by checking the value of 'initialised' in state.json, if not it will hold your hand while setting up your smart accounts.
